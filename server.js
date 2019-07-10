@@ -32,8 +32,11 @@ io.sockets.on('connection',function(socket){
 	//send message
 	socket.on('send message',function(data){
 		//console.log(data);
-		var msg=socket.username+" : "+data;
-		io.sockets.emit('new message',{msg});
+		var msg=data;
+		var uname=socket.username;
+		var dataoutput=[{"uname":uname,"msg":msg}] ;
+		
+		io.sockets.emit('new message',dataoutput);
 	});
 
 	//new user
