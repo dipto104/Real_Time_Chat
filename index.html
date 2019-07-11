@@ -13,10 +13,19 @@
 			body{
 				margin-top: 30px;
 				
+				
 			}
 			#messagearea{
-				display: none;
+				
+				border-style: solid;
+				border-width: 5px;
+				
 			}
+			#chat{
+				overflow-y: auto;
+				height: 400px;
+			}
+			
 		</style>
 	</head>
 	<body>
@@ -34,14 +43,14 @@
 					</div>
 			</div>
 			<div id="messagearea" class="row">
-				<div class="col-md-4">
+				<div class="col-sm-3 col-md-6">
 					<div class="card card-body bg-light">
 						<h3>Online Users</h3>
 						<ul class="list-group" id="users"></ul>
 					</div>
 					
 				</div>
-				<div class="col-md-8">
+				<div class="col-sm-3 col-md-6">
 					<div class="chat" id="chat"></div>
 
 					<form id="messageForm">
@@ -73,18 +82,22 @@
 
 			var chatusername='';
 
+			$messagearea.hide();
+
 			$messageForm.submit(function(e){
 				e.preventDefault();
-				socket.emit('send message', $message.val());
+				if($message.val()!=''){
+					socket.emit('send message', $message.val());
+				}
 				$message.val('');
 			});
 			socket.on('new message',function(data){
 				var tempdata=JSON.parse(JSON.stringify(data));
 				if(tempdata[0].uname==chatusername){
-					$chat.append('<div class="card card-body bg-light">'+'You : '+tempdata[0].msg+'<div>');
+					$chat.append('<div class="card card-body bg-light" align="right">'+'You : '+tempdata[0].msg+'<div>');
 				}
 				else{
-					$chat.append('<div class="card card-body bg-light">'+tempdata[0].uname+' : '+tempdata[0].msg+'<div>');
+					$chat.append('<div class="card card-body " align="left">'+tempdata[0].uname+' : '+tempdata[0].msg+'<div>');
 				}
 				
 			});
