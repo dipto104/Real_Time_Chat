@@ -32,14 +32,14 @@
 		<div class="container">
 			<div id=userformArea class="row">
 					<div class="col-md-12">
-							<form id="userForm">
-									<div class="form-group">
-										<label>Enter Username</label>
-										<input class="form-control" id="username"/>										
-										</br>
-										<input type="submit" class="btn btn-primary" value="Login" />
-									</div>
-								</form>
+						<form id="userForm">
+							<div class="form-group">
+								<label>Enter Username</label>
+								<input class="form-control" id="username"/>										
+								</br>
+								<input type="submit" class="btn btn-primary" value="Login" />
+							</div>
+						</form>
 					</div>
 			</div>
 			<div id="messagearea" class="row">
@@ -116,11 +116,27 @@
 			socket.on('get users',function(data){
 				var html='';
 				for(var i=0;i<data.length;i++){
-					html+='<li class="list-group-item">'+data[i]+'</li>';
+					html+='<li class="list-group-item" id="'+i+'">'+data[i]+'</li>';
 				}
 				//console.log(data);
 				$users.html(html);
 			});
+
+			/*$($users).click(function(e) 
+			{ 
+			//alert($(this).find("li.i").text());
+			console.log($(this).text());
+			console.log($(this).id);
+			});*/
+
+			$users.on("click",".list-group-item",function(e){
+				console.log($(this).text());
+				console.log(e.target.id);
+			});
+			
+
+			
+
 		});
 	</script>
 </html>
